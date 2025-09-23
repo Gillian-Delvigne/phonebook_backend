@@ -86,12 +86,12 @@ app.delete("/api/persons/:id", (request, response) => {
 });
 
 app.get("/", (request, response) => {
-    response.send("Welcome to my Phonebook");
+    response.json("Welcome to my Phonebook");
 });
 
-const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+// const PORT = process.env.PORT || 3001;
+// app.listen(PORT, () => {
+//     console.log(`Server running on port ${PORT}`);
+// });
 
-module.exports = app;
+module.exports = (req, res) => app(req, res);
