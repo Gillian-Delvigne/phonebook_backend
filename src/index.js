@@ -86,6 +86,10 @@ app.delete("/api/persons/:id", (request, response) => {
     } else response.status(404).end();
 });
 
+app.get("/", (request, response) => {
+	response.sendFile("/public/index.html");
+})
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
