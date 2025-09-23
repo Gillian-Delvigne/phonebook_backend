@@ -1,7 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
-const cors = require("cors");
 
 const data = require("./data");
 const PORT = process.env.PORT || 3000
@@ -10,7 +9,6 @@ const app = express();
 
 app.use(express.static("public"));
 app.use(express.json());
-app.use(cors());
 
 app.use(
     morgan(":method :url :status :response-time ms", {
