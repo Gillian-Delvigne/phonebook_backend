@@ -1,14 +1,15 @@
 const express = require("express");
 const morgan = require("morgan");
-var cors = require("cors");
+const path = require("path");
+const cors = require("cors");
 
 const data = require("./data");
 const PORT = 3000;
 
 const app = express();
 
+app.use(express.static(path.join(__dirname, "../public")));
 app.use(express.json());
-
 app.use(cors());
 
 app.use(
@@ -86,7 +87,10 @@ app.delete("/api/persons/:id", (request, response) => {
     } else response.status(404).end();
 });
 
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../public", "index.html"));
+});
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
-
