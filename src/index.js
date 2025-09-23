@@ -1,6 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
-var cors = require('cors')
+var cors = require("cors");
 
 const data = require("./data");
 
@@ -10,15 +10,18 @@ app.use(express.json());
 
 app.use(cors());
 
-app.use(morgan(':method :url :status :response-time ms', {
-  skip: (req) => req.method === 'POST'
-}));
+app.use(
+    morgan(":method :url :status :response-time ms", {
+        skip: (req) => req.method === "POST",
+    })
+);
 
 morgan.token("body", (req) => JSON.stringify(req.body));
-app.use(morgan(':method :url :status :response-time ms :body', {
-  skip: (req) => req.method !== 'POST'
-}));
-
+app.use(
+    morgan(":method :url :status :response-time ms :body", {
+        skip: (req) => req.method !== "POST",
+    })
+);
 
 app.get("/info", (request, response) => {
     const timestamp = Date();
@@ -63,14 +66,14 @@ app.post("/api/persons", (request, response) => {
 });
 
 app.put("/api/persons/:id", (request, response) => {
-	 const index = data.persons.findIndex(
+    const index = data.persons.findIndex(
         (person) => person.id === request.params.id
     );
     if (index) {
-		const newPerson = request.body;
-		data.persons[index] = newPerson;
-	}
-})
+        const newPerson = request.body;
+        data.persons[index] = newPerson;
+    }
+});
 
 app.delete("/api/persons/:id", (request, response) => {
     const person = data.persons.find(
@@ -80,6 +83,10 @@ app.delete("/api/persons/:id", (request, response) => {
         data.persons = data.persons.filter((p) => p.id !== person.id);
         response.status(204).end();
     } else response.status(404).end();
+});
+
+app.get("/", (request, response) => {
+    response.send("Welcome to my Phonebook");
 });
 
 const PORT = process.env.PORT || 3001;
