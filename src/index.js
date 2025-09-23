@@ -3,6 +3,7 @@ const morgan = require("morgan");
 var cors = require("cors");
 
 const data = require("./data");
+const PORT = 3000;
 
 const app = express();
 
@@ -86,12 +87,11 @@ app.delete("/api/persons/:id", (request, response) => {
 });
 
 app.get("/", (request, response) => {
-    response.json("Welcome to my Phonebook");
+    response.send("Welcome to my Phonebook");
 });
 
-// const PORT = process.env.PORT || 3001;
-// app.listen(PORT, () => {
-//     console.log(`Server running on port ${PORT}`);
-// });
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+});
 
-module.exports = (req, res) => app(req, res);
+// module.exports = app;
