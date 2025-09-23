@@ -86,12 +86,7 @@ app.delete("/api/persons/:id", (request, response) => {
     } else response.status(404).end();
 });
 
-app.get("/", (request, response) => {
-    response.send("Welcome to my Phonebook");
-});
-
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 
-// module.exports = app;
