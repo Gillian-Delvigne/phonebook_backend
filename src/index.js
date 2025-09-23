@@ -4,11 +4,11 @@ const path = require("path");
 const cors = require("cors");
 
 const data = require("./data");
-const PORT = 3000;
+const PORT = process.env.PORT || 3000
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, "../public")));
+app.use(express.static("../public"));
 app.use(express.json());
 app.use(cors());
 
@@ -85,10 +85,6 @@ app.delete("/api/persons/:id", (request, response) => {
         data.persons = data.persons.filter((p) => p.id !== person.id);
         response.status(204).end();
     } else response.status(404).end();
-});
-
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../public", "index.html"));
 });
 
 app.listen(PORT, () => {
