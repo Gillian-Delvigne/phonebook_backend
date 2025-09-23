@@ -87,7 +87,7 @@ app.delete("/api/persons/:id", (request, response) => {
 });
 
 app.get("/", (request, response) => {
-	response.sendFile("/public/index.html");
+	response.sendFile("../public/index.html");
 })
 
 app.listen(PORT, () => {
