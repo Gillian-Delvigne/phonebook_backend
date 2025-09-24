@@ -29,18 +29,14 @@ app.get("/info", (request, response) => {
 });
 
 app.get("/api/persons/:id", (request, response) => {
-    const person = data.persons.find(
-        (persons) => persons.id === request.params.id
-    );
-    if (person) response.json(person);
-    else response.status(404).end();
+    Person.findById(request.params.id).then((person) => {
+        if (person) response.json(person);
+        else response.status(404).end();
+    });
 });
 
 app.get("/api/persons", (request, response) => {
-	console.log("coucou");
-	console.log(Person);
     Person.find({}).then((persons) => {
-        console.log(persons);
         if (persons) response.json(persons);
         else response.status(404).end();
     });
