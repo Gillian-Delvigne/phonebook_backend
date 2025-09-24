@@ -2,7 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 
 const Person = require("./models/person");
-const PORT = process.env.PORT
+const PORT = process.env.PORT;
 
 const app = express();
 
@@ -37,11 +37,11 @@ app.get("/api/persons/:id", (request, response) => {
 });
 
 app.get("/api/persons", (request, response) => {
-	Person.find({}).then(persons => {
-    response.json(persons)
-  })
-    // if (data.persons) response.json(data.persons);
-    // else response.status(404).end();
+    Person.find({}).then((persons) => {
+        console.log(persons);
+        if (persons) response.json(persons);
+        else response.status(404).end();
+    });
 });
 
 app.post("/api/persons", (request, response) => {
