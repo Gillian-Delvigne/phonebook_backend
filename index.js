@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 
 const Person = require("./models/person");
+const { update } = require("three/examples/jsm/libs/tween.module.js");
 const PORT = process.env.PORT;
 
 const app = express();
@@ -57,7 +58,7 @@ app.post("/api/persons", (request, response) => {
 
     Person.find({ name: body.name }).then((person) => {
         if (person.length)
-            response.status(400).json({
+            return response.status(400).json({
                 error: "name must be unique",
             });
         else {
@@ -65,7 +66,7 @@ app.post("/api/persons", (request, response) => {
                 name: body.name,
                 number: body.number,
             });
-            newPerson.save().then((savedPerson) => {
+            return newPerson.save().then((savedPerson) => {
                 response.json(savedPerson);
             });
         }
@@ -73,13 +74,16 @@ app.post("/api/persons", (request, response) => {
 });
 
 app.put("/api/persons/:id", (request, response) => {
-    const index = data.persons.findIndex(
-        (person) => person.id === request.params.id
-    );
-    if (index) {
-        const newPerson = request.body;
-        data.persons[index] = newPerson;
-    }
+    const { name, number } = request.body;
+
+    Person.findById(request.params.id).then((person) => {
+        if (!person) return response.status(404).end();
+        person.name = name;
+        person.number = number;
+        return person.save().then((updatedPerson) => {
+            response.json(updatedPerson);
+        });
+    });
 });
 
 app.delete("/api/persons/:id", (request, response) => {
