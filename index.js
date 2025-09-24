@@ -2,7 +2,6 @@ const express = require("express");
 const morgan = require("morgan");
 
 const Person = require("./models/person");
-const { update } = require("three/examples/jsm/libs/tween.module.js");
 const PORT = process.env.PORT;
 
 const app = express();
