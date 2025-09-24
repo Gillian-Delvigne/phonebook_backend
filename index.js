@@ -55,14 +55,21 @@ app.post("/api/persons", (request, response) => {
             error: "name or number missing",
         });
 
-    if (data.persons.find((person) => person.name === body.name))
-        return response.status(400).json({
-            error: "name must be unique",
-        });
-    const id = (Math.random() * 10000).toString();
-    const person = { id: id, ...body };
-    data.persons = data.persons.concat(person);
-    response.json(person);
+    Person.find({ name: body.name }).then((person) => {
+        if (person)
+            response.status(400).json({
+                error: "name must be unique",
+            });
+        else {
+            const newPerson = new Person({
+                name: body.name,
+                number: body.number,
+            });
+            newPerson.save().then((savedPerson) => {
+                response.json(savedPerson);
+            });
+        }
+    });
 });
 
 app.put("/api/persons/:id", (request, response) => {
