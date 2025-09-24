@@ -37,6 +37,8 @@ app.get("/api/persons/:id", (request, response) => {
 });
 
 app.get("/api/persons", (request, response) => {
+	console.log("coucou");
+	console.log(Person);
     Person.find({}).then((persons) => {
         console.log(persons);
         if (persons) response.json(persons);
