@@ -1,11 +1,14 @@
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
+require("dotenv").config();
 
 const Person = require("./models/person");
 const PORT = process.env.PORT;
 
 const app = express();
 
+app.use(cors());
 app.use(express.static("public"));
 app.use(express.json());
 
@@ -113,7 +116,6 @@ const unknownEndpoint = (request, response) => {
 };
 
 const errorHandler = (error, request, response, next) => {
-    console.error(error.message);
     if (error.name === "CastError") {
         return response.status(400).send({ error: "malformatted id" });
     } else if (error.name === "ValidationError") {
