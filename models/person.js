@@ -15,12 +15,12 @@ mongoose
 const personSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
-        minLength: 3,
+        required: [true, "User name required"],
+        minLength: [3, "Name should be at least 3 characters"],
     },
     number: {
         type: String,
-        minLength: 8,
+        minLength: [8, "Phone number is too short (8 minimum)"],
         validate: {
             validator: function (v) {
                 return /\d{2,3}-\d+/.test(v);
