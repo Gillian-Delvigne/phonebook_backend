@@ -92,14 +92,6 @@ app.delete("/api/persons/:id", (request, response) => {
             response.status(204).end();
         });
     });
-
-    const person = data.persons.find(
-        (person) => person.id === request.params.id
-    );
-    if (person) {
-        data.persons = data.persons.filter((p) => p.id !== person.id);
-        response.status(204).end();
-    } else response.status(404).end();
 });
 
 app.listen(PORT, () => {
