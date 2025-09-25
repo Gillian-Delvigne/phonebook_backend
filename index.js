@@ -86,6 +86,13 @@ app.put("/api/persons/:id", (request, response) => {
 });
 
 app.delete("/api/persons/:id", (request, response) => {
+    Person.findById(request.params.id).then((person) => {
+        if (!person) return response.status(404).end();
+        return Person.deleteOne(person).then(() => {
+            response.status(204).end();
+        });
+    });
+
     const person = data.persons.find(
         (person) => person.id === request.params.id
     );
