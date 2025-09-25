@@ -23,9 +23,12 @@ app.use(
 );
 
 app.get("/info", (request, response) => {
-    const timestamp = Date();
-    const info = `<p>Phonebook has info for ${data.persons.length} people</p><p>${timestamp}</p>`;
-    response.send(info);
+    Person.find({}).then((persons) => {
+		console.log(persons);
+        const timestamp = Date();
+        const info = `<p>Phonebook has info for ${persons.length} people</p><p>${timestamp}</p>`;
+        response.send(info);
+    });
 });
 
 app.get("/api/persons/:id", (request, response) => {
